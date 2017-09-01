@@ -34,7 +34,7 @@ namespace MyConfig
             if (value != null) //Exists lets just update the value
                 value.Name = valuePair.Name;
             else
-                vp.Add(valuePair);
+                vp.Add(valuePair); // I can do .Add since the main class (ValuePairs) is inheriting from the list class List<ValuePair>
 
             var towrite = JsonConvert.SerializeObject(vp);
 
@@ -43,6 +43,9 @@ namespace MyConfig
 
         private static ValuePairs ValuePairs()
         {
+            if (!File.Exists("configFile.json"))
+                return new ValuePairs();       
+        
             var input = File.ReadAllText("configFile.json");
             var valuePairs = JsonConvert.DeserializeObject<ValuePairs>(input);
             return valuePairs;
